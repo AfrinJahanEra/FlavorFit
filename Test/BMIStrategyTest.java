@@ -20,5 +20,22 @@ public class BMIStrategyTest {
         assertEquals("Walking", exercises.get(1).getName());
     }
 
+    @Test
+    public void testNormalBmi() {
+        BMIStrategy strategy = new BMIStrategy();
+        List<Exercise> exercises = strategy.getExercises("1.70,70");
+        assertEquals(2, exercises.size());
+        assertEquals("Cardio", exercises.get(0).getName());
+        assertEquals("Strength Training", exercises.get(1).getName());
+    }
+
+    @Test
+    public void testOverweightBmi() {
+        BMIStrategy strategy = new BMIStrategy();
+        List<Exercise> exercises = strategy.getExercises("1.70,90");
+        assertEquals(2, exercises.size());
+        assertEquals("Low-Impact Aerobics", exercises.get(0).getName());
+        assertEquals("Swimming", exercises.get(1).getName());
+    }
 
 }
