@@ -29,4 +29,5 @@ public class BMRCalculatorTest {
         });
         assertEquals("Invalid gender. Use 'M' for male or 'F' for female.", exception.getMessage());
     }
+    
 }
