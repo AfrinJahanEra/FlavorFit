@@ -1,0 +1,8 @@
+Squats:
+- Repetitions: 3 sets of 12
+- Instructions:
+  1. Stand with feet shoulder-width apart.
+  2. Lower your body until your thighs are parallel to the ground.
+  3. Keep your back straight and chest up.
+  4. Return to the starting position.
+

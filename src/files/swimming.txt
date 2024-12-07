@@ -1,0 +1,6 @@
+Swimming:
+- Duration: 30 minutes
+- Instructions:
+  1. Start with 5 minutes of light freestyle swimming.
+  2. Alternate between backstroke and breaststroke for 20 minutes.
+  3. End with 5 minutes of relaxed floating or light swimming.
