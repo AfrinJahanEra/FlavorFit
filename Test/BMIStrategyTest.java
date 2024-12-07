@@ -10,7 +10,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BMIStrategyTest {
-
     @Test
     public void testUnderweightBmi() {
         BMIStrategy strategy = new BMIStrategy();
@@ -37,5 +36,4 @@ public class BMIStrategyTest {
         assertEquals("Low-Impact Aerobics", exercises.get(0).getName());
         assertEquals("Swimming", exercises.get(1).getName());
     }
-
 }
