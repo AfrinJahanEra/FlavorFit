@@ -1,0 +1,7 @@
+Cardio:
+- Duration: 30 minutes
+- Instructions:
+  1. Start with 5 minutes of light jogging or brisk walking.
+  2. Perform jumping jacks for 1 minute.
+  3. Alternate between running in place and high knees for 10 minutes.
+  4. Cool down with stretches.
