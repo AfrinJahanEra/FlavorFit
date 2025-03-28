@@ -1,0 +1,19 @@
+what should i eat for breakfast|diabetes|For breakfast, you can try oatmeal, whole-grain bread, or an egg-based dish to maintain stable blood sugar levels.
+what should i eat for breakfast|heart disease|For breakfast, focus on whole grains, fruits, and omega-3 rich foods like chia seeds or walnuts.
+what should i eat for breakfast|all|Try a high-fiber, protein-rich breakfast such as oatmeal, eggs, or Greek yogurt.
+what is a healthy dinner|diabetes|A balanced dinner for diabetes could be grilled chicken with quinoa and a side of steamed vegetables.
+what is a healthy dinner|heart disease|For heart health, have salmon or grilled tofu with leafy greens and quinoa.
+what is a healthy dinner|all|A healthy dinner is a plate with 50% vegetables, 25% protein, and 25% whole grains.
+what snacks are healthy|all|Healthy snacks include fruits, nuts, and vegetables with hummus.
+what snacks are healthy|diabetes|For diabetes, try unsweetened yogurt, almonds, or carrot sticks with hummus.
+what snacks are healthy|heart disease|For heart disease, try fruit, nuts (like almonds), or whole-grain crackers with avocado.
+how many meals should i eat per day|all|It is generally recommended to eat 3 balanced meals with 1-2 healthy snacks.
+what should i drink with meals|diabetes|For diabetes, drink water, herbal teas, or a sugar-free beverage with meals.
+what should i drink with meals|heart disease|Drink water, unsweetened herbal tea, or a small amount of low-fat milk with meals to support heart health.
+what should i drink with meals|all|Water is always a good choice for hydration during meals.
+what exercises are good for weight loss|all|Try exercises like brisk walking, jogging, swimming, or cycling to aid in weight loss.
+what exercises are good for weight loss|diabetes|For diabetes, moderate exercises like walking, swimming, and cycling can help manage blood sugar levels.
+what exercises are good for weight loss|heart disease|For heart disease, focus on low-impact exercises like walking, cycling, or water aerobics.
+how do i manage stress|all|Practice relaxation techniques like deep breathing, yoga, and mindfulness meditation to manage stress.
+how do i manage stress|diabetes|For diabetes, managing stress is important to avoid blood sugar spikes. Try regular exercise and relaxation techniques.
+how do i manage stress|heart disease|For heart disease, reducing stress is crucial. Consider mindfulness, yoga, or even walking to relax your mind.

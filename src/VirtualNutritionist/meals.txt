@@ -1,0 +1,14 @@
+Oatmeal,breakfast,diabetes,true
+Smoothie,breakfast,all,true
+Avocado Toast,breakfast,heart disease,true
+Scrambled Eggs,breakfast,all,true
+Grilled Chicken,lunch,all,true
+Quinoa Salad,lunch,diabetes,true
+Vegetable Stir Fry,dinner,all,true
+Baked Salmon,dinner,heart disease,true
+Fruit Salad,snack,all,true
+Yogurt Parfait,snack,all,false
+Peanut Butter Sandwich,snack,all,false
+Vegetable Soup,lunch,diabetes,true
+Grilled Fish,dinner,heart disease,true
+Chicken Wrap,lunch,all,true

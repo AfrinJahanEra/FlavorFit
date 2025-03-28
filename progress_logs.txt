@@ -1,0 +1,2 @@
+User ate healthy meals today.
+User missed meals due to a busy schedule.
