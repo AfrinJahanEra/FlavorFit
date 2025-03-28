@@ -2,9 +2,17 @@ package src.Exercise;
 
 import java.util.List;
 import java.util.Scanner;
+import src.User.User;
 
-public class MainApp {
-    public static void main(String[] args) {
+public class ExerciseMain {
+    private final User user;
+
+    // Constructor to accept the User object
+    public ExerciseMain(User user) {
+        this.user = user;
+    }
+
+    public void start() {
         Scanner scanner = new Scanner(System.in);
         ExerciseStrategyFactory factory = new ExerciseStrategyFactory();
 
@@ -17,21 +25,24 @@ public class MainApp {
         String input = "";
 
         switch (choice) {
-            case 1:
+            case 1: // BMI-Based
                 strategy = factory.getStrategy("bmi");
-                System.out.println("Enter your height (m) and weight (kg) as 'height,weight':");
-                input = scanner.nextLine();
+                // Use user's height and weight instead of prompting for input
+                input = user.getHeight() + "," + user.getWeight();
                 break;
-            case 2:
+
+            case 2: // Body Part-Based
                 strategy = factory.getStrategy("bodypart");
                 System.out.println("Enter the body part:");
                 input = scanner.nextLine();
                 break;
-            case 3:
+
+            case 3: // Health Condition-Based
                 strategy = factory.getStrategy("healthcondition");
-                System.out.println("Enter your health condition:");
-                input = scanner.nextLine();
+                // Use user's medical conditions instead of prompting for input
+                input = String.join(",", user.getMedicalConditions());
                 break;
+
             default:
                 System.out.println("Invalid choice!");
                 return;

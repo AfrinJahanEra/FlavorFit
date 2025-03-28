@@ -4,9 +4,15 @@ import java.util.List;
 import java.util.Scanner;
 
 public class RecipeApp {
-    public static void main(String[] args) {
-        RecipeRepository repository = new RecipeRepository("src\\recipes");
-        RecipeService service = new RecipeService(repository);
+    private final RecipeService service;
+
+    // Constructor to initialize the RecipeService
+    public RecipeApp(RecipeRepository repository) {
+        this.service = new RecipeService(repository);
+    }
+
+    // Method to start the Recipe App functionality
+    public void start() {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
