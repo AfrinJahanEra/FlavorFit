@@ -6,6 +6,7 @@ import src.Exercise.ExerciseMain;
 import src.HealthFactor.HealthFactorMain;
 import src.FoodRecipes.RecipeApp;
 import src.FoodRecipes.RecipeRepository;
+import src.Diet.DietFitnessPlanner;
 
 import java.util.List;
 
@@ -29,6 +30,10 @@ public class App {
         RecipeRepository repository = new RecipeRepository("src\\recipes");
         RecipeApp recipeApp = new RecipeApp(repository);
         recipeApp.start();
+
+        // Initialize and start the Diet Fitness Planner
+        DietFitnessPlanner dietFitnessPlanner = new DietFitnessPlanner();
+        dietFitnessPlanner.start();
     }
 
     private static User collectUserInfo() {
