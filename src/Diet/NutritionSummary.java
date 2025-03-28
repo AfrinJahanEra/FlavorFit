@@ -12,8 +12,6 @@ public class NutritionSummary {
         this.totalCarbs = totalCarbs;
         this.totalFat = totalFat;
     }
-
-    // Getters
     public int getTotalCalories() { return totalCalories; }
     public int getTotalProtein() { return totalProtein; }
     public int getTotalCarbs() { return totalCarbs; }

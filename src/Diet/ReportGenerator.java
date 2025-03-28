@@ -1,10 +1,7 @@
 package src.Diet;
 
-
-import java.io.*;
 import java.io.*;
 import java.time.Duration;
-import java.util.List;
 
 public class ReportGenerator {
     public void printSummary(DailySummary summary) {
@@ -27,9 +24,9 @@ public class ReportGenerator {
         
         System.out.println("\nNutrition Tracking:");
         System.out.printf("Calories: %d/%d%n", nutrition.getTotalCalories(), summary.getTargets().getCalorieTarget());
-        System.out.printf("Protein: %dg/%dg%n", nutrition.getTotalProtein(), targets.getProtein());
-        System.out.printf("Carbs: %dg/%dg%n", nutrition.getTotalCarbs(), targets.getCarbs());
-        System.out.printf("Fat: %dg/%dg%n", nutrition.getTotalFat(), targets.getFat());
+        System.out.printf("Protein: %.1fg/%.1fg%n", nutrition.getTotalProtein(), targets.getProtein());
+        System.out.printf("Carbs: %.1fg/%.1fg%n", nutrition.getTotalCarbs(), targets.getCarbs());
+        System.out.printf("Fat: %.1fg/%.1fg%n", nutrition.getTotalFat(), targets.getFat());
     }
 
     private void printExerciseSummary(DailySummary summary) {
@@ -82,6 +79,23 @@ public class ReportGenerator {
         System.out.println(getVerticalBar(nutrition.getTotalFat(), targets.getFat(), "Fat     \u001B[33m"));
     }
 
+    private String getVerticalBar(double actual, double target, String label) {
+        boolean exceeded = actual > target;
+        int maxHeight = 10;
+        int targetHeight = target > 0 ? (int) ((target / actual) * maxHeight) : 0;
+
+        StringBuilder bar = new StringBuilder(label);
+        for (int i = 0; i < maxHeight; i++) {
+            String color = (i < targetHeight) ? "\u001B[42m"
+                    : (exceeded && i < (actual / (target > 0 ? target/maxHeight : 1))) ? "\u001B[41m" : "";
+            bar.append(color).append("█").append("\u001B[0m");
+        }
+        bar.append(String.format(" %.1f/%.1f", actual, target));
+        if (exceeded)
+            bar.append(" \u001B[31mEXCEEDED!\u001B[0m");
+        return bar.toString();
+    }
+
     private void printAlarmStatus(DailySummary summary) {
         System.out.println("\nALERT STATUS:");
         if (summary.getAlarms().isEmpty()) {
@@ -93,7 +107,7 @@ public class ReportGenerator {
 
     private String getHorizontalBar(int current, int target, int length, String unit) {
         boolean exceeded = current > target;
-        double percentage = Math.min((double) current / target * 100, 100);
+        double percentage = target > 0 ? Math.min((double) current / target * 100, 100) : 0;
         int filled = (int) (percentage * length / 100);
 
         String color = exceeded ? "\u001B[41m" : "\u001B[42m";
@@ -111,23 +125,6 @@ public class ReportGenerator {
                 unit,
                 (percentage - 100),
                 exceeded ? "\u001B[31mEXCEEDED!\u001B[0m" : "");
-    }
-
-    private String getVerticalBar(int actual, int target, String label) {
-        boolean exceeded = actual > target;
-        int maxHeight = 10;
-        int targetHeight = (int) ((double) target / actual * maxHeight);
-
-        StringBuilder bar = new StringBuilder(label);
-        for (int i = 0; i < maxHeight; i++) {
-            String color = (i < targetHeight) ? "\u001B[42m"
-                    : (exceeded && i < (actual / (target / maxHeight))) ? "\u001B[41m" : "";
-            bar.append(color).append("█").append("\u001B[0m");
-        }
-        bar.append(String.format(" %d/%d", actual, target));
-        if (exceeded)
-            bar.append(" \u001B[31mEXCEEDED!\u001B[0m");
-        return bar.toString();
     }
 
     public void exportToCSV(DailySummary summary, String filename) throws IOException {
@@ -161,5 +158,73 @@ public class ReportGenerator {
         writer.println("Alarms Triggered," + summary.getAlarms().size());
         summary.getAlarms().forEach(alarm -> writer.println(alarm));
     }
-}
 
+    public void printEnhancedGraphicalSummary(DailySummary summary) {
+        System.out.println("\n=== ENHANCED GRAPHICAL REPORT ===");
+        printNutritionDashboard(summary);
+        printExerciseDashboard(summary);
+        printMacroPieChart(summary);
+    }
+
+    private void printNutritionDashboard(DailySummary summary) {
+        NutritionSummary nutrition = summary.getNutrition();
+        DailyTargets targets = summary.getTargets();
+        
+        System.out.println("\nNUTRITION DASHBOARD");
+        System.out.println("┌───────────────────┬─────────────┬──────────────┐");
+        System.out.println("│ Nutrient          │ Consumed    │ Target       │");
+        System.out.println("├───────────────────┼─────────────┼──────────────┤");
+        System.out.printf("│ Calories          │ %-11d │ %-12d │%n", 
+                nutrition.getTotalCalories(), targets.getCalorieTarget());
+        System.out.printf("│ Protein           │ %-11.1f │ %-12.1f │%n", 
+                nutrition.getTotalProtein(), targets.getMacroTargets().getProtein());
+        System.out.printf("│ Carbs             │ %-11.1f │ %-12.1f │%n", 
+                nutrition.getTotalCarbs(), targets.getMacroTargets().getCarbs());
+        System.out.printf("│ Fat               │ %-11.1f │ %-12.1f │%n", 
+                nutrition.getTotalFat(), targets.getMacroTargets().getFat());
+        System.out.println("└───────────────────┴─────────────┴──────────────┘");
+    }
+
+    private void printExerciseDashboard(DailySummary summary) {
+        System.out.println("\nEXERCISE DASHBOARD");
+        String exerciseBar = getExerciseProgressBar(
+                summary.getFitness().getTotalExerciseTime().toMinutes(),
+                summary.getTargets().getExerciseTarget().toMinutes());
+        System.out.println(exerciseBar);
+    }
+
+    private String getExerciseProgressBar(long current, long target) {
+        double percentage = target > 0 ? Math.min((double) current / target * 100, 100) : 0;
+        int bars = (int) (percentage / 5);
+        
+        String progress = "=".repeat(bars);
+        String remaining = " ".repeat(20 - bars);
+        
+        return String.format("┌───────────────────────────────────┐%n" +
+                            "│ Exercise Progress: %3.0f%%          │%n" +
+                            "│ [%-20s] %6.1f/%d min │%n" +
+                            "└───────────────────────────────────┘",
+                            percentage, progress + remaining, (double) current, target);
+    }
+
+    private void printMacroPieChart(DailySummary summary) {
+        NutritionSummary nutrition = summary.getNutrition();
+        double total = nutrition.getTotalProtein() + nutrition.getTotalCarbs() + nutrition.getTotalFat();
+        
+        if (total <= 0) {
+            System.out.println("\nNo macronutrient data available");
+            return;
+        }
+        
+        System.out.println("\nMACRONUTRIENT DISTRIBUTION");
+        System.out.println("   \u001B[34mProtein\u001B[0m \u001B[32mCarbs\u001B[0m \u001B[33mFat\u001B[0m");
+        System.out.println("   ┌───────┐");
+        
+        // Simple pie chart representation
+        int proteinAngle = (int) (360 * (nutrition.getTotalProtein() / total));
+        int carbsAngle = (int) (360 * (nutrition.getTotalCarbs() / total));
+        
+        System.out.printf("   │ \u001B[34m%-3d°\u001B[0m \u001B[32m%-3d°\u001B[0m │%n", proteinAngle, carbsAngle);
+        System.out.println("   └───────┘");
+    }
+}

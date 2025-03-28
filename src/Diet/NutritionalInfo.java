@@ -2,11 +2,11 @@ package src.Diet;
 
 public class NutritionalInfo {
     private final int calories;
-    private final int protein;
-    private final int carbs;
-    private final int fat;
+    private final double protein;
+    private final double carbs;
+    private final double fat;
 
-    public NutritionalInfo(int calories, int protein, int carbs, int fat) {
+    public NutritionalInfo(int calories, double protein, double carbs, double fat) {
         this.calories = calories;
         this.protein = protein;
         this.carbs = carbs;
@@ -15,7 +15,7 @@ public class NutritionalInfo {
 
     // Getters
     public int getCalories() { return calories; }
-    public int getProtein() { return protein; }
-    public int getCarbs() { return carbs; }
-    public int getFat() { return fat; }
+    public double getProtein() { return protein; }
+    public double getCarbs() { return carbs; }
+    public double getFat() { return fat; }
 }

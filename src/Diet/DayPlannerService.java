@@ -60,4 +60,13 @@ public class DayPlannerService {
             targets
         );
     }
+
+    public NutritionSummary getCurrentNutritionSummary() {
+        return nutritionReporter.getNutritionSummary();
+    }
+    
+    public DailyTargets getDailyTargets() {
+        return targets;
+    }
+    
 }

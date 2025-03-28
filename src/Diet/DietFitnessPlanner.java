@@ -1,9 +1,9 @@
 package src.Diet;
 
-
 import java.time.Duration;
 import java.util.List;
 import java.util.Scanner;
+import src.Diet.PersistentFoodDatabase.FoodDatabaseException;
 
 public class DietFitnessPlanner {
     private final PlannerPersistence persistence;
@@ -11,22 +11,30 @@ public class DietFitnessPlanner {
     private final AlarmScheduler alarmScheduler;
     private final AlarmMonitor alarmMonitor;
     private final AlarmLifecycle alarmLifecycle;
+    private PersistentFoodDatabase foodDatabase; // Single source of truth for food data
 
-    // Constructor to initialize dependencies
     public DietFitnessPlanner() {
         this.notificationService = new SoundNotificationService();
         this.alarmScheduler = new ScheduledAlertService(notificationService);
         this.alarmMonitor = (AlarmMonitor) alarmScheduler;
         this.alarmLifecycle = (AlarmLifecycle) alarmScheduler;
         this.persistence = new FileBasedPersistence("planner_state.ser");
+        
+        try {
+            this.foodDatabase = new PersistentFoodDatabase(
+                "food_data.ser",
+                "default_foods.txt"
+            );
+        } catch (PersistentFoodDatabase.FoodDatabaseException e) {
+            System.err.println("FATAL: Could not initialize food database: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(1); // Exit if we can't initialize the food database
+        }
     }
 
-    // Instance-based start method
-    public void start() {
-        // Initialize services
+    public void start() throws FoodDatabaseException {
         DayPlannerState state = persistence.load();
 
-        // Initialize with default if no state exists
         if (state == null) {
             System.out.println("No saved state found. Creating new planner.");
             state = initializeNewPlanner();
@@ -39,7 +47,6 @@ public class DietFitnessPlanner {
         InMemoryNutritionTracker nutritionTracker = new InMemoryNutritionTracker();
         InMemoryFitnessTracker fitnessTracker = new InMemoryFitnessTracker();
 
-        // Restore state
         if (state.getMeals() != null) {
             state.getMeals().forEach(nutritionTracker::addMeal);
         }
@@ -47,7 +54,6 @@ public class DietFitnessPlanner {
             state.getExercises().forEach(fitnessTracker::addExercise);
         }
 
-        // Verify targets exist
         DailyTargets targets = state.getTargets();
         if (targets == null) {
             System.err.println("No targets found in state. Exiting.");
@@ -63,9 +69,13 @@ public class DietFitnessPlanner {
             alarmScheduler
         );
 
-        ConsoleUI ui = new ConsoleUI(plannerService, alarmMonitor);
+        ConsoleUI ui = new ConsoleUI(
+            plannerService,
+            alarmMonitor,
+            foodDatabase, // Passed as FoodLookup
+            foodDatabase  // Passed as FoodWriter
+        );
 
-        // Add shutdown hook to save state
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             DayPlannerState newState = new DayPlannerState(
                 targets,
@@ -74,6 +84,7 @@ public class DietFitnessPlanner {
             );
             try {
                 persistence.save(newState);
+                foodDatabase.saveToFile(); // Using the persistence capability
             } catch (Exception e) {
                 System.err.println("Failed to save state: " + e.getMessage());
             }
@@ -89,9 +100,9 @@ public class DietFitnessPlanner {
 
         try {
             int calorieTarget = readInt(scanner, "Enter calorie target: ");
-            int proteinTarget = readInt(scanner, "Enter protein target (g): ");
-            int carbsTarget = readInt(scanner, "Enter carbs target (g): ");
-            int fatTarget = readInt(scanner, "Enter fat target (g): ");
+            double proteinTarget = readDouble(scanner, "Enter protein target (g): ");
+            double carbsTarget = readDouble(scanner, "Enter carbs target (g): ");
+            double fatTarget = readDouble(scanner, "Enter fat target (g): ");
             int exerciseMinutes = readInt(scanner, "Enter exercise target (minutes): ");
 
             NutritionalInfo macroTargets = new NutritionalInfo(0, proteinTarget, carbsTarget, fatTarget);
@@ -113,6 +124,17 @@ public class DietFitnessPlanner {
             System.out.print(prompt);
             try {
                 return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please enter a number.");
+            }
+        }
+    }
+
+    private double readDouble(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            try {
+                return Double.parseDouble(scanner.nextLine());
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input! Please enter a number.");
             }
