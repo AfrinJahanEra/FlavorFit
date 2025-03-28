@@ -1,5 +1,8 @@
 package src.Diet;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.List;
 import java.util.Scanner;
@@ -19,16 +22,19 @@ public class DietFitnessPlanner {
         this.alarmMonitor = (AlarmMonitor) alarmScheduler;
         this.alarmLifecycle = (AlarmLifecycle) alarmScheduler;
         this.persistence = new FileBasedPersistence("planner_state.ser");
-        
+
         try {
+            Path dataDir = Paths.get("data");
+            if (!Files.exists(dataDir)) {
+                Files.createDirectories(dataDir);
+            }
+
             this.foodDatabase = new PersistentFoodDatabase(
-                "food_data.ser",
-                "default_foods.txt"
-            );
-        } catch (PersistentFoodDatabase.FoodDatabaseException e) {
-            System.err.println("FATAL: Could not initialize food database: " + e.getMessage());
-            e.printStackTrace();
-            System.exit(1); // Exit if we can't initialize the food database
+                    "food_data.ser",
+                    "default_foods.txt");
+        } catch (Exception e) {
+            System.err.println("FATAL: Could not initialize data directory: " + e.getMessage());
+            System.exit(1);
         }
     }
 
@@ -61,27 +67,25 @@ public class DietFitnessPlanner {
         }
 
         DayPlannerService plannerService = new DayPlannerService(
-            targets,
-            nutritionTracker,
-            nutritionTracker,
-            fitnessTracker,
-            fitnessTracker,
-            alarmScheduler
-        );
+                targets,
+                nutritionTracker,
+                nutritionTracker,
+                fitnessTracker,
+                fitnessTracker,
+                alarmScheduler);
 
         ConsoleUI ui = new ConsoleUI(
-            plannerService,
-            alarmMonitor,
-            foodDatabase, // Passed as FoodLookup
-            foodDatabase  // Passed as FoodWriter
+                plannerService,
+                alarmMonitor,
+                foodDatabase, // Passed as FoodLookup
+                foodDatabase // Passed as FoodWriter
         );
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             DayPlannerState newState = new DayPlannerState(
-                targets,
-                nutritionTracker.getMeals(),
-                fitnessTracker.getExercises()
-            );
+                    targets,
+                    nutritionTracker.getMeals(),
+                    fitnessTracker.getExercises());
             try {
                 persistence.save(newState);
                 foodDatabase.saveToFile(); // Using the persistence capability
@@ -107,10 +111,9 @@ public class DietFitnessPlanner {
 
             NutritionalInfo macroTargets = new NutritionalInfo(0, proteinTarget, carbsTarget, fatTarget);
             DailyTargets targets = new DailyTargets(
-                calorieTarget,
-                macroTargets,
-                Duration.ofMinutes(exerciseMinutes)
-            );
+                    calorieTarget,
+                    macroTargets,
+                    Duration.ofMinutes(exerciseMinutes));
 
             return new DayPlannerState(targets, List.of(), List.of());
         } catch (Exception e) {

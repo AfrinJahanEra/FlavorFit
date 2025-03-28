@@ -1,8 +1,8 @@
 package src.Diet;
 
 import java.io.*;
-import java.util.*;
 import java.nio.file.*;
+import java.util.*;
 
 public class PersistentFoodDatabase implements FoodLookup, FoodWriter, FoodPersistence {
     private final Map<String, NutritionalInfo> database = new HashMap<>();
@@ -14,7 +14,7 @@ public class PersistentFoodDatabase implements FoodLookup, FoodWriter, FoodPersi
         this.binaryFilename = binaryFilename;
         this.textFilename = textFilename;
         this.dataDirectory = Paths.get("data");
-        
+
         try {
             initializeDatabase();
         } catch (FoodDatabaseException e) {
@@ -40,7 +40,7 @@ public class PersistentFoodDatabase implements FoodLookup, FoodWriter, FoodPersi
 
     private void ensureDefaultFoodsExist() throws FoodDatabaseException {
         Path textFile = dataDirectory.resolve(textFilename);
-        
+
         if (!Files.exists(textFile)) {
             try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(textFile))) {
                 writer.println("# Default foods database - format: name:calories:protein(g):carbs(g):fat(g)");
@@ -68,14 +68,21 @@ public class PersistentFoodDatabase implements FoodLookup, FoodWriter, FoodPersi
     private void loadFromBinaryFile() throws IOException {
         Path binaryFile = dataDirectory.resolve(binaryFilename);
         if (!Files.exists(binaryFile)) return;
-
+    
         try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(binaryFile))) {
-            @SuppressWarnings("unchecked")
-            Map<String, NutritionalInfo> loaded = (Map<String, NutritionalInfo>) ois.readObject();
-            database.putAll(loaded);
-        } catch (ClassNotFoundException e) {
+            Object obj = ois.readObject();
+            if (obj instanceof Map) {
+                @SuppressWarnings("unchecked")
+                Map<String, NutritionalInfo> loaded = (Map<String, NutritionalInfo>) obj;
+                database.putAll(loaded);
+            }
+        } catch (ClassNotFoundException | InvalidClassException e) {
             System.err.println("Warning: Corrupted binary food database, starting fresh");
-            // Continue with empty database
+            // Delete corrupted file
+            Files.deleteIfExists(binaryFile);
+        } catch (StreamCorruptedException e) {
+            System.err.println("Warning: Invalid binary food database format, starting fresh");
+            Files.deleteIfExists(binaryFile);
         }
     }
 
@@ -89,7 +96,8 @@ public class PersistentFoodDatabase implements FoodLookup, FoodWriter, FoodPersi
             String line;
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
-                if (line.isEmpty() || line.startsWith("#")) continue;
+                if (line.isEmpty() || line.startsWith("#"))
+                    continue;
 
                 try {
                     String[] parts = line.split(":");
@@ -104,8 +112,8 @@ public class PersistentFoodDatabase implements FoodLookup, FoodWriter, FoodPersi
                     double carbs = Double.parseDouble(parts[3].trim());
                     double fat = Double.parseDouble(parts[4].trim());
 
-                    database.putIfAbsent(name.toLowerCase(), 
-                        new NutritionalInfo(calories, protein, carbs, fat));
+                    database.putIfAbsent(name.toLowerCase(),
+                            new NutritionalInfo(calories, protein, carbs, fat));
                 } catch (NumberFormatException e) {
                     System.err.println("Skipping invalid nutrition data in line: " + line);
                 }
@@ -133,13 +141,25 @@ public class PersistentFoodDatabase implements FoodLookup, FoodWriter, FoodPersi
     }
 
     @Override
+
     public void saveToFile() throws FoodDatabaseException {
         Path binaryFile = dataDirectory.resolve(binaryFilename);
-        
+
+        // Create temp file first
+        Path tempFile = dataDirectory.resolve(binaryFilename + ".tmp");
+
         try (ObjectOutputStream oos = new ObjectOutputStream(
-            Files.newOutputStream(binaryFile, StandardOpenOption.CREATE))) {
+                Files.newOutputStream(tempFile, StandardOpenOption.CREATE))) {
             oos.writeObject(database);
+
+            // Only replace original if save succeeded
+            Files.move(tempFile, binaryFile, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
+            try {
+                Files.deleteIfExists(tempFile); // Clean up temp file
+            } catch (IOException ex) {
+                // Ignore cleanup failure
+            }
             throw new FoodDatabaseException("Failed to save food database", e);
         }
     }
