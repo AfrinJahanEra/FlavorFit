@@ -1,69 +1,74 @@
 package src.Exercise;
 
 import java.util.List;
-import java.util.Scanner;
+import src.User.BaseFeature;
 import src.User.User;
 
-public class ExerciseMain {
+public class ExerciseMain extends BaseFeature {
     private final User user;
+    private final ExerciseStrategyFactory factory;
 
-    // Constructor to accept the User object
     public ExerciseMain(User user) {
         this.user = user;
+        this.factory = new ExerciseStrategyFactory();
     }
 
-    public void start() {
-        Scanner scanner = new Scanner(System.in);
-        ExerciseStrategyFactory factory = new ExerciseStrategyFactory();
+    @Override
+    public String getTitle() {
+        return "Exercise Recommendation System";
+    }
 
-        System.out.println("Welcome to Exercise Recommendation System");
-        System.out.println("Choose an option: 1. BMI-Based 2. Body Part-Based 3. Health Condition-Based");
-        int choice = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+    @Override
+    public void display() {
+        String[] options = {
+            "BMI-Based Recommendations",
+            "Body Part-Based Recommendations", 
+            "Health Condition-Based Recommendations"
+        };
 
-        ExerciseStrategy strategy = null;
-        String input = "";
+        Runnable[] handlers = {
+            () -> showBmiRecommendations(),
+            () -> showBodyPartRecommendations(),
+            () -> showHealthConditionRecommendations()
+        };
 
-        switch (choice) {
-            case 1: // BMI-Based
-                strategy = factory.getStrategy("bmi");
-                // Use user's height and weight instead of prompting for input
-                input = user.getHeight() + "," + user.getWeight();
-                break;
+        displayMenu(getTitle(), options, handlers);
+    }
 
-            case 2: // Body Part-Based
-                strategy = factory.getStrategy("bodypart");
-                System.out.println("Enter the body part:");
-                input = scanner.nextLine();
-                break;
+    private void showBmiRecommendations() {
+        ExerciseStrategy strategy = factory.getStrategy("bmi");
+        String input = user.getHeight() + "," + user.getWeight();
+        showExerciseRecommendations(strategy, input);
+    }
 
-            case 3: // Health Condition-Based
-                strategy = factory.getStrategy("healthcondition");
-                // Use user's medical conditions instead of prompting for input
-                input = String.join(",", user.getMedicalConditions());
-                break;
+    private void showBodyPartRecommendations() {
+        System.out.print("Enter the body part: ");
+        String bodyPart = scanner.nextLine();
+        ExerciseStrategy strategy = factory.getStrategy("bodypart");
+        showExerciseRecommendations(strategy, bodyPart);
+    }
 
-            default:
-                System.out.println("Invalid choice!");
-                return;
+    private void showHealthConditionRecommendations() {
+        ExerciseStrategy strategy = factory.getStrategy("healthcondition");
+        String input = String.join(",", user.getMedicalConditions());
+        showExerciseRecommendations(strategy, input);
+    }
+
+    private void showExerciseRecommendations(ExerciseStrategy strategy, String input) {
+        List<Exercise> exercises = strategy.getExercises(input);
+        
+        System.out.println("\nRecommended Exercises:");
+        for (int i = 0; i < exercises.size(); i++) {
+            System.out.println((i + 1) + ". " + exercises.get(i).getName());
         }
 
-        if (strategy != null) {
-            List<Exercise> exercises = strategy.getExercises(input);
-            System.out.println("Recommended Exercises:");
-            for (Exercise exercise : exercises) {
-                System.out.println("- " + exercise.getName());
-            }
-
-            System.out.println("Enter the name of the exercise to see instructions:");
-            String exerciseName = scanner.nextLine();
-            for (Exercise exercise : exercises) {
-                if (exercise.getName().equalsIgnoreCase(exerciseName)) {
-                    System.out.println("Instructions:");
-                    System.out.println(InstructionReader.readInstructions(exercise.getDetailsFilePath()));
-                    break;
-                }
-            }
+        System.out.print("Select an exercise to see instructions (0 to go back): ");
+        int choice = getIntInput("", 0, exercises.size());
+        
+        if (choice > 0) {
+            Exercise selected = exercises.get(choice - 1);
+            System.out.println("\nInstructions for " + selected.getName() + ":");
+            System.out.println(InstructionReader.readInstructions(selected.getDetailsFilePath()));
         }
     }
 }

@@ -1,86 +1,109 @@
 package src.HealthFactor;
 
-import java.util.Scanner;
+import src.User.BaseFeature;
 import src.User.User;
 
-public class HealthFactorMain {
-
+public class HealthFactorMain extends BaseFeature {
     private final User user;
 
-    // Constructor to accept the User object
     public HealthFactorMain(User user) {
         this.user = user;
     }
 
-    public void start() {
-        Scanner scanner = new Scanner(System.in);
+    @Override
+    public String getTitle() {
+        return "Health Factor Calculator";
+    }
 
-        // Choose the health metric
-        System.out.println("Select Health Metric to Calculate:");
-        System.out.println("1. BMI");
-        System.out.println("2. BMR");
-        System.out.println("3. IBW");
-        System.out.println("4. Hydration Requirements");
-        System.out.println("5. Heart Rate Metrics");
-        System.out.println("6. TDEE");
-        System.out.print("Enter your choice (1-6): ");
-        int choice = scanner.nextInt();
+    @Override
+    public void display() {
+        String[] options = {
+            "BMI",
+            "BMR",
+            "IBW",
+            "Hydration Requirements",
+            "Heart Rate Metrics",
+            "TDEE"
+        };
 
-        double result = 0;
+        Runnable[] handlers = {
+            () -> calculateBMI(),
+            () -> calculateBMR(),
+            () -> calculateIBW(),
+            () -> calculateHydration(),
+            () -> calculateHeartRate(),
+            () -> calculateTDEE()
+        };
 
-        // Execute according to the selected choice
-        switch (choice) {
-            case 1: // BMI
-                double weight = user.getWeight();
-                double height = user.getHeight(); // Assuming height is in meters
-                HealthMetricCalculator bmiCalculator = new BMICalculator(weight, height);
-                HealthMetricService bmiService = new HealthMetricService(bmiCalculator);
-                result = bmiService.calculateMetric();
-                System.out.println("Your BMI is: " + result);
-                break;
+        displayMenu(getTitle(), options, handlers);
+    }
 
-            case 2: // BMR
-                char gender = user.getGender().charAt(0); // Assuming gender is "M" or "F"
-                HealthMetricCalculator bmrCalculator = new BMRCalculator(user.getWeight(), user.getHeight() * 100, user.getAge(), gender);
-                HealthMetricService bmrService = new HealthMetricService(bmrCalculator);
-                result = bmrService.calculateMetric();
-                System.out.println("Your BMR is: " + result);
-                break;
+    private void calculateBMI() {
+        double weight = user.getWeight();
+        double height = user.getHeight();
+        HealthMetricCalculator bmiCalculator = new BMICalculator(weight, height);
+        HealthMetricService bmiService = new HealthMetricService(bmiCalculator);
+        double result = bmiService.calculateMetric();
+        System.out.println("Your BMI is: " + result);
+    }
 
-            case 3: // IBW
-                gender = user.getGender().charAt(0); // Assuming gender is "M" or "F"
-                HealthMetricCalculator ibwCalculator = new IBWCalculator(user.getHeight() * 100, gender);
-                HealthMetricService ibwService = new HealthMetricService(ibwCalculator);
-                result = ibwService.calculateMetric();
-                System.out.println("Your Ideal Body Weight (IBW) is: " + result);
-                break;
+    private void calculateBMR() {
+        char gender = user.getGender().charAt(0);
+        HealthMetricCalculator bmrCalculator = new BMRCalculator(
+            user.getWeight(), 
+            user.getHeight() * 100, 
+            user.getAge(), 
+            gender
+        );
+        HealthMetricService bmrService = new HealthMetricService(bmrCalculator);
+        double result = bmrService.calculateMetric();
+        System.out.println("Your BMR is: " + result);
+    }
 
-            case 4: // Hydration Requirements
-                HealthMetricCalculator hydrationCalculator = new HydrationCalculator(user.getWeight());
-                HealthMetricService hydrationService = new HealthMetricService(hydrationCalculator);
-                result = hydrationService.calculateMetric();
-                System.out.println("Your daily hydration requirement is: " + result + " liters");
-                break;
+    private void calculateIBW() {
+        char gender = user.getGender().charAt(0);
+        HealthMetricCalculator ibwCalculator = new IBWCalculator(
+            user.getHeight() * 100, 
+            gender
+        );
+        HealthMetricService ibwService = new HealthMetricService(ibwCalculator);
+        double result = ibwService.calculateMetric();
+        System.out.println("Your Ideal Body Weight (IBW) is: " + result);
+    }
 
-            case 5: // Heart Rate Metrics
-                HealthMetricCalculator heartRateCalculator = new HeartRateCalculator(user.getAge(), 70); // Assuming resting heart rate is 70
-                HealthMetricService heartRateService = new HealthMetricService(heartRateCalculator);
-                result = heartRateService.calculateMetric();
-                System.out.println("Your target heart rate is: " + result);
-                break;
+    private void calculateHydration() {
+        HealthMetricCalculator hydrationCalculator = new HydrationCalculator(user.getWeight());
+        HealthMetricService hydrationService = new HealthMetricService(hydrationCalculator);
+        double result = hydrationService.calculateMetric();
+        System.out.println("Your daily hydration requirement is: " + result + " liters");
+    }
 
-            case 6: // TDEE
-                System.out.print("Enter activity level multiplier (e.g., 1.2, 1.55, 1.9): ");
-                double activityLevel = scanner.nextDouble();
-                HealthMetricCalculator tdeeCalculator = new TDEECalculator(result, activityLevel); // Assuming BMR is already calculated
-                HealthMetricService tdeeService = new HealthMetricService(tdeeCalculator);
-                result = tdeeService.calculateMetric();
-                System.out.println("Your Total Daily Energy Expenditure (TDEE) is: " + result);
-                break;
+    private void calculateHeartRate() {
+        HealthMetricCalculator heartRateCalculator = new HeartRateCalculator(user.getAge(), 70);
+        HealthMetricService heartRateService = new HealthMetricService(heartRateCalculator);
+        double result = heartRateService.calculateMetric();
+        System.out.println("Your target heart rate is: " + result);
+    }
 
-            default:
-                System.out.println("Invalid choice.");
-        }
-
+    private void calculateTDEE() {
+        System.out.print("Enter activity level multiplier (e.g., 1.2, 1.55, 1.9): ");
+        double activityLevel = scanner.nextDouble();
+        scanner.nextLine(); // Consume newline
+        
+        // Need to calculate BMR first for TDEE
+        char gender = user.getGender().charAt(0);
+        HealthMetricCalculator bmrCalculator = new BMRCalculator(
+            user.getWeight(), 
+            user.getHeight() * 100, 
+            user.getAge(), 
+            gender
+        );
+        HealthMetricService bmrService = new HealthMetricService(bmrCalculator);
+        double bmr = bmrService.calculateMetric();
+        
+        HealthMetricCalculator tdeeCalculator = new TDEECalculator(bmr, activityLevel);
+        HealthMetricService tdeeService = new HealthMetricService(tdeeCalculator);
+        double result = tdeeService.calculateMetric();
+        System.out.println("Your Total Daily Energy Expenditure (TDEE) is: " + result);
     }
 }

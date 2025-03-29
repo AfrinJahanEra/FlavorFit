@@ -1,55 +1,50 @@
 package src.FoodRecipes;
 
 import java.util.List;
-import java.util.Scanner;
+import src.User.BaseFeature;
 
-public class RecipeApp {
+public class RecipeApp extends BaseFeature {
     private final RecipeService service;
 
-    // Constructor to initialize the RecipeService
     public RecipeApp(RecipeRepository repository) {
         this.service = new RecipeService(repository);
     }
 
-    // Method to start the Recipe App functionality
-    public void start() {
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.println("\nWelcome to Recipe App!");
-            System.out.println("1. Find recipes by goal");
-            System.out.println("2. Search recipes by ingredient");
-            System.out.println("3. Exit");
-            System.out.print("Choose an option: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-
-            if (choice == 3) break;
-
-            switch (choice) {
-                case 1:
-                    System.out.print("Enter your goal (e.g., weight loss, muscle gain): ");
-                    String goal = scanner.nextLine();
-                    List<Recipe> goalRecipes = service.getRecipesByGoal(goal);
-                    displayRecipes(goalRecipes, scanner);
-                    break;
-
-                case 2:
-                    System.out.print("Enter an ingredient to search: ");
-                    String ingredient = scanner.nextLine();
-                    List<Recipe> ingredientRecipes = service.getRecipesByIngredient(ingredient);
-                    displayRecipes(ingredientRecipes, scanner);
-                    break;
-
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-        }
-
-        System.out.println("Thank you for using Recipe App!");
+    @Override
+    public String getTitle() {
+        return "Recipe Finder";
     }
 
-    private static void displayRecipes(List<Recipe> recipes, Scanner scanner) {
+    @Override
+    public void display() {
+        String[] options = {
+            "Find recipes by goal",
+            "Search recipes by ingredient"
+        };
+
+        Runnable[] handlers = {
+            () -> findRecipesByGoal(),
+            () -> searchRecipesByIngredient()
+        };
+
+        displayMenu(getTitle(), options, handlers);
+    }
+
+    private void findRecipesByGoal() {
+        System.out.print("Enter your goal (e.g., weight loss, muscle gain): ");
+        String goal = scanner.nextLine();
+        List<Recipe> recipes = service.getRecipesByGoal(goal);
+        displayRecipes(recipes);
+    }
+
+    private void searchRecipesByIngredient() {
+        System.out.print("Enter an ingredient to search: ");
+        String ingredient = scanner.nextLine();
+        List<Recipe> recipes = service.getRecipesByIngredient(ingredient);
+        displayRecipes(recipes);
+    }
+
+    private void displayRecipes(List<Recipe> recipes) {
         if (recipes.isEmpty()) {
             System.out.println("No recipes found.");
             return;
@@ -61,10 +56,9 @@ public class RecipeApp {
         }
 
         System.out.print("Select a recipe number to view details (or 0 to go back): ");
-        int choice = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-
-        if (choice > 0 && choice <= recipes.size()) {
+        int choice = getIntInput("", 0, recipes.size());
+        
+        if (choice > 0) {
             recipes.get(choice - 1).display();
         }
     }

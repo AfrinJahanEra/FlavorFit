@@ -1,37 +1,66 @@
 package src.VirtualNutritionist;
 
-import java.util.Scanner;
+import java.io.IOException;
+import src.User.BaseFeature;
 import src.User.User;
 
-public class VirtualNutritionist {
+public class VirtualNutritionist extends BaseFeature {
     private final User user;
+    private final MealService mealService;
+    private final TipService tipService;
+    private final QnAService qnaService;
 
-    // Constructor to accept the User object
-    public VirtualNutritionist(User user) {
+    public VirtualNutritionist(User user) throws IOException {
         this.user = user;
+        this.mealService = new MealService("src/VirtualNutritionist/meals.txt");
+        this.tipService = new TipService("src/VirtualNutritionist/tips.txt");
+        this.qnaService = new QnAService();
     }
 
-    public void start() {
-        try {
-            MealService mealService = new MealService("src\\VirtualNutritionist\\meals.txt");
-            TipService tipService = new TipService("src\\VirtualNutritionist\\tips.txt");
-            QnAService qnaService = new QnAService();
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Welcome to the Virtual Nutritionist!");
+    @Override
+    public String getTitle() {
+        return "Virtual Nutritionist";
+    }
 
-            System.out.println("\n--- Personalized Meal Plan ---");
-            mealService.getFilteredMeals("breakfast", user.getMedicalConditions(), user.getAllergies())
-                    .forEach(meal -> System.out.println("Meal: " + meal.getName()));
-            System.out.println("\n--- Personalized Tips ---");
-            user.getMedicalConditions().forEach(condition -> 
-                tipService.getTipsForCondition(condition).forEach(System.out::println)
+    @Override
+    public void display() {
+        String[] options = {
+            "View Personalized Meal Plan",
+            "Get Health Tips",
+            "Ask a Nutrition Question"
+        };
+
+        Runnable[] handlers = {
+            () -> showMealPlan(),
+            () -> showHealthTips(),
+            () -> askNutritionQuestion()
+        };
+
+        displayMenu(getTitle(), options, handlers);
+    }
+
+    private void showMealPlan() {
+        System.out.println("\n--- Personalized Meal Plan ---");
+        mealService.getFilteredMeals("breakfast", user.getMedicalConditions(), user.getAllergies())
+                 .forEach(meal -> System.out.println("• " + meal.getName()));
+        System.out.println();
+    }
+
+    private void showHealthTips() {
+        System.out.println("\n--- Personalized Tips ---");
+        user.getMedicalConditions().forEach(condition -> {
+            System.out.println("\nFor " + condition + ":");
+            tipService.getTipsForCondition(condition).forEach(tip -> 
+                System.out.println("• " + tip)
             );
-            System.out.println("\n--- Ask a question ---");
-            String question = scanner.nextLine();
-            System.out.println("Response: " + qnaService.getResponse(question));
+        });
+        System.out.println();
+    }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void askNutritionQuestion() {
+        System.out.print("\nEnter your nutrition question: ");
+        String question = scanner.nextLine();
+        System.out.println("\nResponse: " + qnaService.getResponse(question));
+        System.out.println();
     }
 }
