@@ -1,34 +1,39 @@
 package src.User;
 
 import java.util.List;
-import src.Diet.DietFitnessPlanner;
-import src.Diet.PersistentFoodDatabase.FoodDatabaseException;
+import src.DietPlanner.NutritionTrackerApp;
+import src.Exercise.ExerciseMain;
+import src.FoodRecipes.RecipeApp;
+import src.FoodRecipes.RecipeRepository;
+import src.HealthFactor.HealthFactorMain;
 import src.Utils.ConsoleUI;
+import src.VirtualNutritionist.VirtualNutritionist;
 
 public class App {
-    public static void main(String[] args) throws FoodDatabaseException {
-        // User user = collectUserInfo(); // Collect user information
+    public static void main(String[] args){
+        User user = collectUserInfo(); // Collect user information
 
-        // // Pass the User object to the Virtual Nutritionist
-        // VirtualNutritionist virtualNutritionist = new VirtualNutritionist(user);
-        // virtualNutritionist.start();
+        // Pass the User object to the Virtual Nutritionist
+        VirtualNutritionist virtualNutritionist = new VirtualNutritionist(user);
+        virtualNutritionist.start();
 
-        // // Pass the User object to the Health Factor Calculator
-        // HealthFactorMain healthFactorMain = new HealthFactorMain(user);
-        // healthFactorMain.start();
+        // Pass the User object to the Health Factor Calculator
+        HealthFactorMain healthFactorMain = new HealthFactorMain(user);
+        healthFactorMain.start();
 
-        // // Pass the User object to the Exercise Recommendation System
-        // ExerciseMain exerciseMain = new ExerciseMain(user);
-        // exerciseMain.start();
+        // Pass the User object to the Exercise Recommendation System
+        ExerciseMain exerciseMain = new ExerciseMain(user);
+        exerciseMain.start();
 
-        // // Initialize and start the Recipe App
-        // RecipeRepository repository = new RecipeRepository("src\\recipes");
-        // RecipeApp recipeApp = new RecipeApp(repository);
-        // recipeApp.start();
+        // Initialize and start the Recipe App
+        RecipeRepository repository = new RecipeRepository("src\\recipes");
+        RecipeApp recipeApp = new RecipeApp(repository);
+        recipeApp.start();
+
+        System.out.println("\nStarting Nutrition Tracker...");
+        NutritionTrackerApp.start();
 
         // Initialize and start the Diet Fitness Planner
-        DietFitnessPlanner dietFitnessPlanner = new DietFitnessPlanner();
-        dietFitnessPlanner.start();
     }
 
     private static User collectUserInfo() {

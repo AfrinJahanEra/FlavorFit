@@ -1,0 +1,6 @@
+apple:95:0.5:25:0.3
+banana:105:1.3:27:0.4
+chicken breast:165:31:0:3.6
+rice:130:2.7:28:0.3
+whole wheat bread:69:3.6:12:0.9
+milk:103:8:12:2.4
