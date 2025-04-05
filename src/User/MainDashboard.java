@@ -7,10 +7,11 @@ import src.Exercise.ExerciseMain;
 import src.FoodRecipes.RecipeApp;
 import src.FoodRecipes.RecipeRepository;
 import src.HealthFactor.HealthFactorMain;
+import src.Utils.ConsoleUI;
 import src.VirtualNutritionist.VirtualNutritionist;
 
 public class MainDashboard extends BaseFeature {
-    private final List<Feature> features;
+    private final List<BaseFeature> features;
     
     public MainDashboard(User user) throws IOException {
         this.features = List.of(
@@ -29,17 +30,17 @@ public class MainDashboard extends BaseFeature {
     public void display() {
         while (true) {
             String[] options = features.stream()
-                .map(Feature::getTitle)
+                .map(BaseFeature::getTitle)
                 .toArray(String[]::new);
             
             Runnable[] handlers = features.stream()
                 .map(feature -> (Runnable) feature::display)
                 .toArray(Runnable[]::new);
             
-            displayMenu(getTitle(), options, handlers);
+            displayMenuUntilExit(getTitle(), options, handlers);
             
             // If user selected "Back", exit the loop
-            if (getIntInput("Press 1 to continue or 2 to exit: ", 1, 2) == 2) {
+            if (ConsoleUI.getIntInput("Press 1 to continue or 2 to exit: ", 1, 2) == 2) {
                 return;
             }
         }

@@ -36,7 +36,7 @@ public class VirtualNutritionist extends BaseFeature {
             () -> askNutritionQuestion()
         };
 
-        displayMenu(getTitle(), options, handlers);
+        displayMenuUntilExit(getTitle(), options, handlers);
     }
 
     private void showMealPlan() {

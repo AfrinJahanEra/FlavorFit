@@ -10,7 +10,7 @@ import src.Exercise.Exercise;
 public final class ConsoleUI {
     private static final Scanner scanner = new Scanner(System.in);
 
-    private ConsoleUI() {}
+    public ConsoleUI() {}
 
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");

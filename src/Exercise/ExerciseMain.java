@@ -3,6 +3,7 @@ package src.Exercise;
 import java.util.List;
 import src.User.BaseFeature;
 import src.User.User;
+import src.Utils.ConsoleUI;
 
 public class ExerciseMain extends BaseFeature {
     private final User user;
@@ -32,7 +33,7 @@ public class ExerciseMain extends BaseFeature {
             () -> showHealthConditionRecommendations()
         };
 
-        displayMenu(getTitle(), options, handlers);
+        displayMenuUntilExit(getTitle(), options, handlers);
     }
 
     private void showBmiRecommendations() {
@@ -63,7 +64,7 @@ public class ExerciseMain extends BaseFeature {
         }
 
         System.out.print("Select an exercise to see instructions (0 to go back): ");
-        int choice = getIntInput("", 0, exercises.size());
+        int choice = ConsoleUI.getIntInput("", 0, exercises.size());
         
         if (choice > 0) {
             Exercise selected = exercises.get(choice - 1);

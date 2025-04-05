@@ -35,7 +35,7 @@ public class HealthFactorMain extends BaseFeature {
             () -> calculateTDEE()
         };
 
-        displayMenu(getTitle(), options, handlers);
+        displayMenuUntilExit(getTitle(), options, handlers);
     }
 
     private void calculateBMI() {

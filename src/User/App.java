@@ -3,17 +3,28 @@ package src.User;
 import java.io.IOException;
 import java.util.List;
 import src.Utils.ConsoleUI;
+import src.Utils.FlovurFitPrinter;
 
 
 public class App {
+
+    
     public static void main(String[] args) throws IOException {
+
+
+        ConsoleUI.clearScreen();
+
+        FlovurFitPrinter f = new FlovurFitPrinter();
+        f.FlovurFitPrint();
+
+
         User user = collectUserInfo();
         new MainDashboard(user).display();
     }
     
 
     private static User collectUserInfo() {
-        ConsoleUI.clearScreen();
+  
         ConsoleUI.printHeader("USER REGISTRATION");
 
         String name = ConsoleUI.getStringInput("Enter your name: ");

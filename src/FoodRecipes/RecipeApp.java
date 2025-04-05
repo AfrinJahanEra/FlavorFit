@@ -2,6 +2,7 @@ package src.FoodRecipes;
 
 import java.util.List;
 import src.User.BaseFeature;
+import src.Utils.ConsoleUI;
 
 public class RecipeApp extends BaseFeature {
     private final RecipeService service;
@@ -27,7 +28,7 @@ public class RecipeApp extends BaseFeature {
             () -> searchRecipesByIngredient()
         };
 
-        displayMenu(getTitle(), options, handlers);
+        displayMenuUntilExit(getTitle(), options, handlers);
     }
 
     private void findRecipesByGoal() {
@@ -56,7 +57,7 @@ public class RecipeApp extends BaseFeature {
         }
 
         System.out.print("Select a recipe number to view details (or 0 to go back): ");
-        int choice = getIntInput("", 0, recipes.size());
+        int choice = ConsoleUI.getIntInput("", 0, recipes.size());
         
         if (choice > 0) {
             recipes.get(choice - 1).display();
