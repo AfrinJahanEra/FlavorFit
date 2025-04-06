@@ -23,4 +23,3 @@ public class Meal {
     public boolean isAllergenFree() { return isAllergenFree; }
 }
 
-

@@ -3,10 +3,10 @@ package src.HealthFactor;
 import src.User.BaseFeature;
 import src.User.User;
 
-public class HealthFactorMain extends BaseFeature {
+public class HealthFactor extends BaseFeature {
     private final User user;
 
-    public HealthFactorMain(User user) {
+    public HealthFactor(User user) {
         this.user = user;
     }
 

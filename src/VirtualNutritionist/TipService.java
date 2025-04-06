@@ -3,17 +3,25 @@ package src.VirtualNutritionist;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
+import src.FileManager.FileLoader;
+import src.FileManager.SimpleFileLoader;
 
 public class TipService {
-    private List<String> tips;
+    private final List<String> tips;
 
     public TipService(String tipsFilePath) throws IOException {
-        this.tips = FileLoader.loadFile(tipsFilePath);
+        FileLoader<String> fileLoader = new SimpleFileLoader();
+        this.tips = fileLoader.loadFromFile(tipsFilePath);
     }
 
     public List<String> getTipsForCondition(String medicalCondition) {
+        if (medicalCondition == null || medicalCondition.trim().isEmpty()) {
+            return List.of();
+        }
+
+        final String conditionLower = medicalCondition.toLowerCase();
         return tips.stream()
-                   .filter(tip -> tip.toLowerCase().contains(medicalCondition.toLowerCase()))
-                   .collect(Collectors.toList());
+                .filter(tip -> tip != null && tip.toLowerCase().contains(conditionLower))
+                .collect(Collectors.toList());
     }
 }

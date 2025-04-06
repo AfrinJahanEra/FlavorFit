@@ -4,14 +4,13 @@ import java.util.concurrent.TimeUnit;
 import src.User.BaseFeature;
 import src.Utils.ConsoleUI;
 
-public class NutritionTrackerApp extends BaseFeature {
+public class NutritionTracker extends BaseFeature {
     private final UserProfile userProfile;
-    private final FoodRepository foodRepository;
+    private final NutritionDataManager nutritionDataManager;
 
-    public NutritionTrackerApp() {
-        NutritionDataManager dataManager = new NutritionDataManager();
-        this.userProfile = new UserProfile(dataManager);
-        this.foodRepository = dataManager;
+    public NutritionTracker() {
+        this.nutritionDataManager = new NutritionDataManager();
+        this.userProfile = new UserProfile(nutritionDataManager);
         userProfile.loadData();
     }
 
@@ -30,10 +29,10 @@ public class NutritionTrackerApp extends BaseFeature {
         };
 
         Runnable[] handlers = {
-            () -> setTargets(),
-            () -> addFood(),
-            () -> startExerciseTimer(),
-            () -> showReport()
+            this::setTargets,
+            this::addFood,
+            this::startExerciseTimer,
+            this::showReport
         };
 
         displayMenuUntilExit(getTitle(), options, handlers);
@@ -60,7 +59,7 @@ public class NutritionTrackerApp extends BaseFeature {
         System.out.print("Enter food name: ");
         String foodName = scanner.nextLine();
 
-        foodRepository.findFood(foodName).ifPresentOrElse(
+        nutritionDataManager.findFood(foodName).ifPresentOrElse(
             food -> {
                 displayFoodInfo(food);
                 userProfile.addFoodConsumption(food);
@@ -76,12 +75,28 @@ public class NutritionTrackerApp extends BaseFeature {
         UserProgress progress = userProfile.getUserProgress();
 
         boolean exceeded = false;
+
         if (progress.getCalories() > target.getCalorieTarget()) {
             System.out.println("Warning: You have exceeded your calorie target!");
             SoundPlayer.playSound();
             exceeded = true;
         }
-        // ... similar checks for protein, carbs, fat ...
+
+        if (progress.getProtein() > target.getProteinTarget()) {
+            System.out.println("Warning: You have exceeded your protein target!");
+            SoundPlayer.playSound();
+            exceeded = true;
+        }
+        if (progress.getCarbs() > target.getCarbsTarget()) {
+            System.out.println("Warning: You have exceeded your carbs target!");
+            SoundPlayer.playSound();
+            exceeded = true;
+        }
+        if (progress.getFat() > target.getFatTarget()) {
+            System.out.println("Warning: You have exceeded your fat target!");
+            SoundPlayer.playSound();
+            exceeded = true;
+        }
 
         if (!exceeded) {
             System.out.println("You're within your targets. Good job!");
@@ -119,6 +134,7 @@ public class NutritionTrackerApp extends BaseFeature {
         System.out.println("Total exercise time: " + progress.getExerciseTime() + " minutes");
     }
 
+
     private void runExerciseTimer(int minutes) {
         System.out.println("Starting exercise timer for " + minutes + " minutes...");
         try {
@@ -149,9 +165,8 @@ public class NutritionTrackerApp extends BaseFeature {
             System.out.print("Enter new exercise target (minutes): ");
             int newTarget = ConsoleUI.getIntInput("", 1, Integer.MAX_VALUE);
             userProfile.getUserTarget().setExerciseTarget(newTarget);
-            userProfile.saveTargets();
+            nutritionDataManager.saveTargets(userProfile.getUserTarget());
             System.out.println("Exercise target updated successfully!");
-            SoundPlayer.playSound();
         }
         showReport();
     }

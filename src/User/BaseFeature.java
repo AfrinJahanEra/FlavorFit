@@ -6,13 +6,10 @@ import src.Utils.ConsoleUI;
 public abstract class BaseFeature {
     protected final Scanner scanner = new Scanner(System.in);
     
-    // Abstract method that all features must implement
+
     public abstract String getTitle();
-    
-    // Main display method that features will implement
     public abstract void display();
     
-    // Utility method for creating menu-driven features
     protected void displayMenuUntilExit(String title, String[] options, Runnable[] handlers) {
         if (options == null || handlers == null || options.length != handlers.length) {
             throw new IllegalArgumentException("Options and handlers arrays must be non-null and of equal length");
@@ -36,14 +33,4 @@ public abstract class BaseFeature {
         }
     }
     
-    // Helper method for getting user input
-    protected String getInput(String prompt) {
-        System.out.print(prompt);
-        return scanner.nextLine();
-    }
-    
-    // Helper method for getting numeric input
-    protected int getIntInput(String prompt, int min, int max) {
-        return ConsoleUI.getIntInput(prompt, min, max);
-    }
 }
