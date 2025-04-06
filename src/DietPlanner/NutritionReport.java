@@ -26,23 +26,85 @@ class NutritionReport {
     }
 
     private void displayGraphicalRepresentation() {
-        System.out.println("\n[Graphical Representation]");
-        printBarChart("Calories", progress.getCalories(), target.getCalorieTarget());
-        printBarChart("Protein", progress.getProtein(), target.getProteinTarget());
-        printBarChart("Carbs", progress.getCarbs(), target.getCarbsTarget());
-        printBarChart("Fat", progress.getFat(), target.getFatTarget());
-        printBarChart("Exercise", progress.getExerciseTime(), target.getExerciseTarget());
+        System.out.println("\n[Advanced Nutrition Progress Chart]");
+        
+        // Define the nutrition items and their values
+        String[] nutrients = {"Calories", "Protein", "Carbs", "Fat", "Exercise"};
+        double[] progressValues = {
+            progress.getCalories(),
+            progress.getProtein(),
+            progress.getCarbs(),
+            progress.getFat(),
+            progress.getExerciseTime()
+        };
+        double[] targetValues = {
+            target.getCalorieTarget(),
+            target.getProteinTarget(),
+            target.getCarbsTarget(),
+            target.getFatTarget(),
+            target.getExerciseTarget()
+        };
+        
+        // Calculate scaling factor for the chart
+        double maxValue = 0;
+        for (int i = 0; i < nutrients.length; i++) {
+            maxValue = Math.max(maxValue, Math.max(progressValues[i], targetValues[i]));
+        }
+        int chartWidth = 50;
+        double scale = chartWidth / maxValue;
+        
+        // Print Y-axis labels and bars
+        for (int i = 0; i < nutrients.length; i++) {
+            // Format the nutrient name (Y-axis label)
+            System.out.printf("%-8s | ", nutrients[i]);
+            
+            int targetPos = (int) (targetValues[i] * scale);
+            int progressPos = (int) (progressValues[i] * scale);
+            
+            // Print the bar
+            for (int j = 0; j <= chartWidth; j++) {
+                if (j == targetPos) {
+                    // Target position marker
+                    System.out.print("|");
+                } else if (j == progressPos) {
+                    // Progress position - show with different character if exceeded
+                    if (progressValues[i] > targetValues[i]) {
+                        System.out.print("\u001B[31mX\u001B[0m"); // Red X for exceeded
+                    } else {
+                        System.out.print("o"); // Regular marker
+                    }
+                } else if (j < progressPos && j < targetPos) {
+                    // Before both progress and target
+                    System.out.print("-");
+                } else if (j < progressPos) {
+                    // Exceeded target area
+                    System.out.print("\u001B[31m-\u001B[0m"); // Red for exceeded
+                } else {
+                    // After both
+                    System.out.print(" ");
+                }
+            }
+            
+            // Print the numeric values
+            System.out.printf(" %.1f/%s", progressValues[i], 
+                targetValues[i] == (int)targetValues[i] ? 
+                String.valueOf((int)targetValues[i]) : 
+                String.valueOf(targetValues[i]));
+            
+            System.out.println();
+        }
+        
+        // Print X-axis
+        System.out.print("         +");
+        for (int i = 0; i <= chartWidth; i += 5) {
+            System.out.printf("+----%-4d", (int)(i / scale));
+        }
+        System.out.println();
+        
+        // Legend
+        System.out.println("Legend: | = Target, o = Progress, X = Exceeded (shown in red)");
     }
-
-    private void printBarChart(String label, double progress, double target) {
-        int maxBars = 50;
-        int bars = (int) ((progress / target) * maxBars);
-        bars = Math.min(bars, maxBars);
-        System.out.print(label + ": [");
-        System.out.print("=".repeat(bars));
-        System.out.print(" ".repeat(maxBars - bars));
-        System.out.printf("] %.1f/%.1f\n", progress, target);
-    }
+    
 
     private void displayStatus() {
         System.out.println("\n[Status]");

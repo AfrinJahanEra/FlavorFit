@@ -16,11 +16,15 @@ public abstract class BaseFeature {
         }
         
         while (true) {
-            System.out.println("\n--- " + title + " ---");
+            ConsoleUI.clearScreen();
+            System.out.println("\n                                          ══════════════════════════════════════════ " + title + " ═════════════════════════════════════════════════");
+            System.out.println("\n \n");
             for (int i = 0; i < options.length; i++) {
-                System.out.println((i + 1) + ". " + options[i]);
+                System.out.println("                                                                                     "+(i + 1) + ". " + options[i]);
             }
-            System.out.println((options.length + 1) + ". Back to Main Menu");
+            
+            System.out.println("                                                                                     "+(options.length + 1) + ". Back to Main Menu");
+            System.out.println("\n \n");
             
             int choice = ConsoleUI.getIntInput("Choose an option: ", 1, options.length + 1);
             

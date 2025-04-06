@@ -14,16 +14,17 @@ public class MainDashboard extends BaseFeature {
     private final List<BaseFeature> features;
     
     public MainDashboard(User user) {
-        this.features = initializeFeatures(user);
+         this.features = initializeFeatures(user);
     }
     
     private List<BaseFeature> initializeFeatures(User user) {
+
         List<BaseFeature> features = new ArrayList<>();
         SimpleFileLoader fileLoader = new SimpleFileLoader();
         
         try {
             features.add(new HealthFactor(user));
-            features.add(new RecipeTracker(new RecipeRepository("data/recipes")));
+            features.add(new RecipeTracker(new RecipeRepository("src\\recipes")));
             features.add(new ExerciseTracker(user));
             features.add(new VirtualNutritionist(user));
             features.add(new NutritionTracker());
