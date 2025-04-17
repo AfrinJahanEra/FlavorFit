@@ -11,10 +11,18 @@ public class ExerciseTracker extends BaseFeature {
     private final ExerciseStrategyFactory factory;
     private final InstructionReader instructionReader;
 
+    // Instead of creating dependencies internally:
     public ExerciseTracker(User user) {
         this.user = user;
-        this.factory = new ExerciseStrategyFactory();
-        this.instructionReader = new InstructionReader();
+        this.factory = new ExerciseStrategyFactory();  // Tight coupling
+        this.instructionReader = new InstructionReader();  // Tight coupling
+    }
+
+    // Consider:
+    public ExerciseTracker(User user, ExerciseStrategyFactory factory, InstructionReader reader) {
+        this.user = user;
+        this.factory = factory;  // Injected dependency
+        this.instructionReader = reader;  // Injected dependency
     }
 
     @Override

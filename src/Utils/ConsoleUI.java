@@ -18,12 +18,13 @@ public final class ConsoleUI {
     }
 
     public static void printHeader(String title) {
-        System.out.println("\n=== " + title + " ===");
+        System.out.println("\n═════  " + title + " ═════ ");
     }
 
     public static void printOption(int number, String text) {
         System.out.printf("%d. %s%n", number, text);
     }
+
 
     public static int getIntInput(String prompt, int min, int max) {
         while (true) {

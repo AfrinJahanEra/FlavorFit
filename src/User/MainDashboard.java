@@ -5,29 +5,39 @@ import java.util.List;
 import src.DietPlanner.NutritionTracker;
 import src.Exercise.ExerciseTracker;
 import src.FileManager.RecipeRepository;
-import src.FileManager.SimpleFileLoader;
 import src.FoodRecipes.RecipeTracker;
 import src.HealthFactor.HealthFactor;
 import src.VirtualNutritionist.VirtualNutritionist;
 
-public class MainDashboard extends BaseFeature {
+
+public class MainDashboard { 
     private final List<BaseFeature> features;
+    private final BaseFeature baseFeatureDelegate;  
     
     public MainDashboard(User user) {
-         this.features = initializeFeatures(user);
+        this.baseFeatureDelegate = new BaseFeature() {
+            @Override
+            public String getTitle() { return "Main Dashboard"; }
+            
+            @Override
+            public void display() {
+                // Empty implementation since we override display() below
+            }
+        };
+        this.features = initializeFeatures(user);
     }
     
     private List<BaseFeature> initializeFeatures(User user) {
-
+        // Keep the exact same implementation as before
         List<BaseFeature> features = new ArrayList<>();
-        SimpleFileLoader fileLoader = new SimpleFileLoader();
         
         try {
             features.add(new HealthFactor(user));
+            features.add(new VirtualNutritionist(user));
             features.add(new RecipeTracker(new RecipeRepository("src\\recipes")));
             features.add(new ExerciseTracker(user));
-            features.add(new VirtualNutritionist(user));
             features.add(new NutritionTracker());
+            
         } catch (Exception e) {
             System.err.println("Warning: Some features may not work - " + e.getMessage());
         }
@@ -35,10 +45,12 @@ public class MainDashboard extends BaseFeature {
         return features;
     }
     
-    @Override
-    public String getTitle() { return "Main Dashboard"; }
+    // Delegate getTitle() to our composed BaseFeature
+    public String getTitle() { 
+        return baseFeatureDelegate.getTitle(); 
+    }
     
-    @Override
+    // Modified display() method that uses composition
     public void display() {
         String[] options = features.stream()
             .map(BaseFeature::getTitle)
@@ -48,6 +60,7 @@ public class MainDashboard extends BaseFeature {
             .map(feature -> (Runnable) feature::display)
             .toArray(Runnable[]::new);
         
-        displayMenuUntilExit(getTitle(), options, handlers);
+        // Use the displayMenuUntilExit from our composed BaseFeature
+        baseFeatureDelegate.displayMenuUntilExit(getTitle(), options, handlers);
     }
 }

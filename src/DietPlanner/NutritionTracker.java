@@ -120,34 +120,41 @@ public class NutritionTracker extends BaseFeature {
     private void startExerciseTimer() {
         UserProgress progress = userProfile.getUserProgress();
         UserTarget target = userProfile.getUserTarget();
-
+    
         if (progress.getExerciseTime() >= target.getExerciseTarget()) {
             handleExceededExerciseTarget();
             return;
         }
-
+    
         System.out.print("Enter exercise duration (minutes): ");
         int minutes = ConsoleUI.getIntInput("", 1, Integer.MAX_VALUE);
-
+    
         runExerciseTimer(minutes);
         userProfile.addExerciseTime(minutes);
         System.out.println("Total exercise time: " + progress.getExerciseTime() + " minutes");
     }
-
-
+    
     private void runExerciseTimer(int minutes) {
         System.out.println("Starting exercise timer for " + minutes + " minutes...");
         try {
             for (int i = minutes * 60; i > 0; i--) {
-                if (i % 60 == 0) {
-                    System.out.println("Time remaining: " + (i / 60) + " minutes");
-                }
+                // Clear the previous line
+                System.out.print("\r");
+                
+                // Calculate minutes and seconds remaining
+                int mins = i / 60;
+                int secs = i % 60;
+                
+                // Format the time string with ANSI codes for bold yellow
+                String timeString = String.format("\u001B[1;33mTime remaining: %02d:%02d\u001B[0m", mins, secs);
+                System.out.print(timeString);
+                
                 TimeUnit.SECONDS.sleep(1);
             }
-            System.out.println("Time's up! Exercise completed.");
+            System.out.println("\nTime's up! Exercise completed.");
             SoundPlayer.playSound();
         } catch (InterruptedException e) {
-            System.out.println("Timer interrupted.");
+            System.out.println("\nTimer interrupted.");
         }
     }
 

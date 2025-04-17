@@ -25,7 +25,7 @@ public class App {
 
     private static User collectUserInfo() {
   
-        ConsoleUI.printHeader("USER REGISTRATION");
+        ConsoleUI.printHeader("USER INFORMATION");
 
         String name = ConsoleUI.getStringInput("Enter your name: ");
         int age = ConsoleUI.getIntInput("Enter your age: ", 1, 120);

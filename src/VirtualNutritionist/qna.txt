@@ -1,19 +1,44 @@
-what should i eat for breakfast|diabetes|For breakfast, you can try oatmeal, whole-grain bread, or an egg-based dish to maintain stable blood sugar levels.
-what should i eat for breakfast|heart disease|For breakfast, focus on whole grains, fruits, and omega-3 rich foods like chia seeds or walnuts.
-what should i eat for breakfast|all|Try a high-fiber, protein-rich breakfast such as oatmeal, eggs, or Greek yogurt.
-what is a healthy dinner|diabetes|A balanced dinner for diabetes could be grilled chicken with quinoa and a side of steamed vegetables.
-what is a healthy dinner|heart disease|For heart health, have salmon or grilled tofu with leafy greens and quinoa.
-what is a healthy dinner|all|A healthy dinner is a plate with 50% vegetables, 25% protein, and 25% whole grains.
-what snacks are healthy|all|Healthy snacks include fruits, nuts, and vegetables with hummus.
-what snacks are healthy|diabetes|For diabetes, try unsweetened yogurt, almonds, or carrot sticks with hummus.
-what snacks are healthy|heart disease|For heart disease, try fruit, nuts (like almonds), or whole-grain crackers with avocado.
-how many meals should i eat per day|all|It is generally recommended to eat 3 balanced meals with 1-2 healthy snacks.
-what should i drink with meals|diabetes|For diabetes, drink water, herbal teas, or a sugar-free beverage with meals.
-what should i drink with meals|heart disease|Drink water, unsweetened herbal tea, or a small amount of low-fat milk with meals to support heart health.
-what should i drink with meals|all|Water is always a good choice for hydration during meals.
-what exercises are good for weight loss|all|Try exercises like brisk walking, jogging, swimming, or cycling to aid in weight loss.
-what exercises are good for weight loss|diabetes|For diabetes, moderate exercises like walking, swimming, and cycling can help manage blood sugar levels.
-what exercises are good for weight loss|heart disease|For heart disease, focus on low-impact exercises like walking, cycling, or water aerobics.
-how do i manage stress|all|Practice relaxation techniques like deep breathing, yoga, and mindfulness meditation to manage stress.
-how do i manage stress|diabetes|For diabetes, managing stress is important to avoid blood sugar spikes. Try regular exercise and relaxation techniques.
-how do i manage stress|heart disease|For heart disease, reducing stress is crucial. Consider mindfulness, yoga, or even walking to relax your mind.
+# Nutrition Questions
+what should i eat for breakfast|diabetes|For breakfast with diabetes, try: 1) Oatmeal with nuts, 2) Veggie omelet with whole-grain toast, 3) Greek yogurt with berries. Focus on high-fiber, low-glycemic options.
+what should i eat for breakfast|heart disease|Heart-healthy breakfasts: 1) Oatmeal with flaxseeds, 2) Avocado on whole-grain toast, 3) Smoothie with spinach, banana and almond butter.
+what should i eat for breakfast|high blood pressure|For hypertension: 1) Banana oatmeal, 2) Yogurt with granola, 3) Whole-grain cereal with low-fat milk - all rich in potassium and calcium.
+what should i eat for breakfast|weight loss|Weight-loss breakfasts: 1) Scrambled eggs with veggies, 2) Protein smoothie, 3) Chia pudding - high protein to keep you full.
+what should i eat for breakfast|all|Balanced breakfast options: 1) Whole grain toast with peanut butter, 2) Yogurt parfait with granola, 3) Vegetable omelet with fruit.
+
+# Meal Planning
+what is a healthy lunch|all|Healthy lunch should include: 1) Lean protein (chicken, fish, tofu), 2) Complex carbs (quinoa, brown rice), 3) Plenty of vegetables.
+what is a healthy lunch|diabetes|Diabetic-friendly lunch: 1) Grilled chicken salad, 2) Turkey lettuce wraps, 3) Lentil soup with whole-grain crackers - watch portions.
+what is a healthy dinner|weight loss|Dinner for weight loss: 1) Grilled fish with roasted veggies, 2) Stir-fried tofu with vegetables, 3) Chicken and vegetable soup - keep portions moderate.
+best foods for energy|all|Energy-boosting foods: 1) Bananas, 2) Sweet potatoes, 3) Nuts and seeds, 4) Whole grains, 5) Leafy greens - combine carbs with protein.
+
+# Snacks
+healthy snack ideas|all|Great snack options: 1) Apple with almond butter, 2) Hummus with veggies, 3) Handful of mixed nuts, 4) Hard-boiled eggs, 5) Cheese and whole-grain crackers.
+late night snacks|all|Good late-night snacks: 1) Cottage cheese with fruit, 2) Small handful of almonds, 3) Greek yogurt, 4) Whole-grain cereal with milk - keep portions small.
+snacks for work|all|Office-friendly snacks: 1) Trail mix, 2) Protein bars, 3) Rice cakes with nut butter, 4) Pre-cut vegetables, 5) Single-serve guacamole with crackers.
+
+# Hydration
+best drinks for health|all|Healthiest drinks: 1) Water, 2) Herbal teas, 3) Green tea, 4) Low-fat milk, 5) Fresh vegetable juices (no added sugar).
+what should i drink in morning|all|Morning hydration: 1) Warm lemon water, 2) Herbal tea, 3) Coconut water, 4) Green smoothie - avoid sugary drinks first thing.
+
+# Exercise
+best exercises for beginners|all|Beginner exercises: 1) Walking, 2) Swimming, 3) Yoga, 4) Cycling, 5) Bodyweight exercises - start slow and build gradually.
+exercises to avoid|high blood pressure|With hypertension avoid: 1) Heavy weight lifting, 2) High-intensity intervals, 3) Exercises that cause straining - consult your doctor.
+post-workout meals|all|After workout eat: 1) Protein shake with banana, 2) Chicken with sweet potato, 3) Greek yogurt with berries - within 45 minutes of exercise.
+
+# Special Conditions
+foods to avoid|diabetes|Diabetics should limit: 1) Sugary drinks, 2) White bread/pasta, 3) Fried foods, 4) Processed snacks, 5) Sweetened cereals.
+foods to avoid|heart disease|For heart health avoid: 1) Trans fats, 2) Excess salt, 3) Processed meats, 4) Fried foods, 5) Full-fat dairy products.
+best foods|pregnancy|Pregnancy superfoods: 1) Leafy greens, 2) Eggs, 3) Salmon, 4) Greek yogurt, 5) Lean meats - focus on folate, iron and calcium.
+
+# General Health
+how to boost immunity|all|Immunity boosters: 1) Citrus fruits, 2) Garlic, 3) Ginger, 4) Yogurt, 5) Almonds - plus adequate sleep and exercise.
+signs of dehydration|all|Dehydration signs: 1) Thirst, 2) Dry mouth, 3) Fatigue, 4) Dark urine, 5) Dizziness - drink water regularly.
+how to read nutrition labels|all|Label reading tips: 1) Check serving size, 2) Limit saturated fat and sodium, 3) Look for high fiber, 4) Watch added sugars.
+
+# Weight Management
+how to lose weight safely|all|Safe weight loss tips: 1) Eat more vegetables, 2) Control portions, 3) Stay active, 4) Drink water, 5) Get enough sleep - aim for 1-2 lbs/week.
+how to gain weight healthy|all|Healthy weight gain: 1) Eat more frequent meals, 2) Choose nutrient-dense foods, 3) Strength train, 4) Add healthy fats, 5) Protein with each meal.
+
+# Mental Health
+foods that reduce stress|all|Stress-reducing foods: 1) Dark chocolate, 2) Avocados, 3) Fatty fish, 4) Nuts, 5) Green tea - plus regular meals.
+how to sleep better|all|Sleep tips: 1) Limit caffeine, 2) Establish routine, 3) Dark, cool room, 4) Avoid screens before bed, 5) Try chamomile tea.
