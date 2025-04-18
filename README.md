@@ -1,6 +1,5 @@
-✨ 𝓕𝓵𝓪𝓿𝓸𝓾𝓻𝓕𝓲𝓽 ✨
-𝓢𝓪𝓿𝓸𝓾𝓻 𝓽𝓱𝓮 𝓕𝓵𝓪𝓿𝓸𝓾𝓻 𝓸𝓯 𝓗𝓮𝓪𝓵𝓽𝓱
-A Java-Powered Wellness Companion for a Vibrant Life
+# 🍏 FlavourFit 🌿 | Savor the Flavor of Health! 🏋️‍♀️🍽️  
+### 💻 Fitness at Your Fingertips 
 
 **FlavourFit** is a **console application** designed to promote a healthier lifestyle through personalized recommendations. Built with **Java OOP principles**, it acts as a virtual health assistant, offering tailored guidance on nutrition, fitness, and overall well-being.  
 
