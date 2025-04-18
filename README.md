@@ -9,6 +9,8 @@
 
 ---
 
+![FlavourFit Screenshot](Screenshot%202025-04-18%20221218.png)
+
 # **✨ Features**  
 
 
