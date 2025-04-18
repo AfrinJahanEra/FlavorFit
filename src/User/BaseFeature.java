@@ -22,13 +22,13 @@ public abstract class BaseFeature {
         
         while (true) {
             ConsoleUI.clearScreen();
-            System.out.println(YELLOW+BOLD+"\n                                          ══════════════════════════════════════════ " + title + " ═════════════════════════════════════════════════"+RESET);
+            System.out.println(YELLOW+BOLD+"\n         ══════════════════════════════════════════ " + title + " ═════════════════════════════════════════════════"+RESET);
             System.out.println("\n \n");
             for (int i = 0; i < options.length; i++) {
-                System.out.println(YELLOW+BOLD+"                                                                                     "+(i + 1) + ". " + options[i]+RESET);
+                System.out.println(YELLOW+BOLD+"                                                    "+(i + 1) + ". " + options[i]+RESET);
             }
             
-            System.out.println(YELLOW+BOLD+"                                                                                     "+(options.length + 1) + ". Back to Main Menu"+RESET);
+            System.out.println(YELLOW+BOLD+"                                                    "+(options.length + 1) + ". Back to Main Menu"+RESET);
             System.out.println("\n \n");
             
             int choice = ConsoleUI.getIntInput("Choose an option: ", 1, options.length + 1);

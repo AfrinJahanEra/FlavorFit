@@ -140,7 +140,7 @@ class NutritionReport {
             int value = (int)(i / scale);
             // Adjust spacing based on number of digits
             if (i == 0) {
-                System.out.printf("%-9d", value);
+                System.out.printf("                         ", value);
             } else {
                 System.out.printf("%-10d", value);
             }
