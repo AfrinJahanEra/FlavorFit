@@ -1,5 +1,7 @@
 package src.HealthFactor;
 
+import src.Interface.HealthMetricCalculator;
+
 public class HydrationCalculator implements HealthMetricCalculator {
     private final double weightInKg;
 

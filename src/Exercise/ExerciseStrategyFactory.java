@@ -3,6 +3,8 @@ package src.Exercise;
 import java.util.HashMap;
 import java.util.Map;
 
+import src.Interface.ExerciseStrategy;
+
 public class ExerciseStrategyFactory {
     private final Map<String, ExerciseStrategy> strategies = new HashMap<>();
 

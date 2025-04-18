@@ -1,5 +1,7 @@
 package src.HealthFactor;
 
+import src.Interface.HealthMetricCalculator;
+
 public class HeartRateCalculator implements HealthMetricCalculator {
     private final int age;
     private final double restingHeartRate;

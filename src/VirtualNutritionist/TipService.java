@@ -3,8 +3,8 @@ package src.VirtualNutritionist;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-import src.FileManager.FileLoader;
 import src.FileManager.SimpleFileLoader;
+import src.Interface.FileLoader;
 
 public class TipService {
     private final List<String> tips;

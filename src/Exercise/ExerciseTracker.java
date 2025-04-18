@@ -2,6 +2,7 @@ package src.Exercise;
 
 import java.util.List;
 import src.FileManager.InstructionReader;
+import src.Interface.ExerciseStrategy;
 import src.User.BaseFeature;
 import src.User.User;
 import src.Utils.ConsoleUI;

@@ -1,5 +1,7 @@
 package src.HealthFactor;
 
+import src.Interface.HealthMetricCalculator;
+
 public class IBWCalculator implements HealthMetricCalculator {
     private final double heightInCm;
     private final char gender; // 'M' for male, 'F' for female

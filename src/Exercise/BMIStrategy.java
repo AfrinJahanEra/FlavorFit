@@ -2,6 +2,7 @@ package src.Exercise;
 
 import java.util.ArrayList;
 import java.util.List;
+import src.Interface.ExerciseStrategy;
 
 public class BMIStrategy implements ExerciseStrategy {
     @Override

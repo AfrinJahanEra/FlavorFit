@@ -2,7 +2,7 @@ package src.DietPlanner;
 
 import java.io.*;
 import java.util.*;
-import src.FileManager.FileLoader;
+import src.Interface.*;
 
 
 class NutritionDataManager implements FileLoader<Food>, TargetStorage {

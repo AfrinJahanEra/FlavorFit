@@ -1,5 +1,7 @@
 package src.HealthFactor;
 
+import src.Interface.HealthMetricCalculator;
+
 public class HealthMetricService {
     private final HealthMetricCalculator calculator;
 

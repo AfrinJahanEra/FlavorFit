@@ -1,5 +1,6 @@
 package src.HealthFactor;
 
+import src.Interface.*;
 import src.User.BaseFeature;
 import src.User.User;
 

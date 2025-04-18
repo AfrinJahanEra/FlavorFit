@@ -1,5 +1,7 @@
 package src.HealthFactor;
 
+import src.Interface.HealthMetricCalculator;
+
 public class BMRCalculator implements HealthMetricCalculator {
     private final double weightInKg;
     private final double heightInCm;

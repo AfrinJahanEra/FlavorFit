@@ -42,9 +42,6 @@ javac Main.java
 java Main
 ```
 
-## 📜 UML Diagram
-![FlavourFit UML](docs/uml_diagram.png)
-
 ## 🤝 Contributing
 PRs welcome! Please:
 1. Fork the repository

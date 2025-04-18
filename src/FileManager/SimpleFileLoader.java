@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
+import src.Interface.FileLoader;
 
 public class SimpleFileLoader implements FileLoader<String> {
     @Override

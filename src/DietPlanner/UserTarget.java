@@ -1,6 +1,6 @@
 package src.DietPlanner;
 
-class UserTarget {
+public class UserTarget {
     private int calorieTarget;
     private double proteinTarget;
     private double carbsTarget;

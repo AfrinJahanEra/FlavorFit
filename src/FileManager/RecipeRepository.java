@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import src.FoodRecipes.Recipe;
+import src.Interface.FileLoader;
 
 public class RecipeRepository implements FileLoader<Recipe> {
     private final String recipesPath;
