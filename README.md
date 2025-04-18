@@ -1,81 +1,60 @@
-# FlavourFit 🍏
+# 🍏 FlavourFit - Health & Fitness Console App
 
-*A Java console application for personalized health and fitness recommendations*
+*A Java-based health companion following SOLID principles to deliver personalized wellness recommendations*
 
-![FlavourFit Banner](https://via.placeholder.com/800x200?text=FlavourFit+Health+Companion) *(Replace with actual screenshot)*
+![Java](https://img.shields.io/badge/Java-17-blue)
+![OOP](https://img.shields.io/badge/OOP-SOLID-brightgreen)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-## ✨ Features
+## 🌟 Features
+```java
+1. 📊 Health Metrics (BMI/BMR Calculator)
+2. 🥗 Smart Recipe Recommendations 
+3. 💪 Exercise Suggestions by Body Part
+4. 🤖 Virtual Nutritionist (AI-style tips)
+5. 📈 Nutrition & Exercise Tracker
+```
 
-- **Health Metrics** - BMI/BMR calculators with personalized analysis  
-- **Smart Recipes** - 100+ recipes filtered by dietary goals  
-- **Exercise Plans** - Targeted workouts by body part/condition  
-- **Nutrition Tracking** - Daily calorie and macro logging  
-- **AI Nutritionist** - Personalized diet and fitness tips  
-
-## 🏗 Architecture Highlights
-
+## 🏗️ Architecture
+```mermaid
 graph TD
     A[MainDashboard] --> B[BaseFeature]
     B --> C[HealthFactor]
     B --> D[NutritionTracker]
-    C --> E[BMICalculator]
-    D --> F[FoodDatabase]
+    B --> E[ExerciseTracker]
+    B --> F[VirtualNutritionist]
+    B --> G[RecipeTracker]
+    C --> H[BMICalculator]
+    C --> I[BMRCalculator]
+```
 
-**Built With:**
-- **Java 17** - Core application logic
-- **OOP Principles** - Inheritance, Encapsulation, Polymorphism
-- **SOLID Design** - Clean, maintainable architecture
-- **Maven** - Dependency management
+## 🛠️ Tech Stack
+- **Core**: Java 17
+- **OOP**: Inheritance, Composition, Interfaces
+- **SOLID**: Strict adherence to all 5 principles
+- **Persistence**: File-based data storage
 
-## 🚀 Quick Start
+## 🚀 Getting Started
+```bash
+git clone https://github.com/yourusername/flavourfit.git
+cd flavourfit
+javac Main.java
+java Main
+```
 
-1. **Prerequisites**:
-   - JDK 17+
-   - Maven 3.8+
+## 📜 UML Diagram
+![FlavourFit UML](docs/uml_diagram.png)
 
-2. **Installation**:
-   ```bash
-   git clone https://github.com/yourusername/FlavourFit.git
-   cd FlavourFit
-   mvn package
-   ```
-
-3. **Run**:
-   ```bash
-   java -jar target/flavourfit-1.0.jar
-   ```
-
-## 📂 Project Structure
-
-src/
-├── main/
-│   ├── java/
-│   │   ├── core/          # Base interfaces and classes
-│   │   ├── features/      # Core functionality
-│   │   ├── models/        # Data structures
-│   │   └── services/      # Business logic
-│   └── resources/         # Data files
-docs/                      # Documentation
-pom.xml                    # Maven config
-
-
-## 🤝 How to Contribute
-
+## 🤝 Contributing
+PRs welcome! Please:
 1. Fork the repository
-2. Create a new branch (`git checkout -b feature/your-feature`)
-3. Commit your changes (`git commit -m 'Add some feature'`)
-4. Push to the branch (`git push origin feature/your-feature`)
-5. Open a Pull Request
+2. Create your feature branch
+3. Commit with descriptive messages
+4. Push to the branch
+5. Open a PR
 
-## 📜 License
+## 📄 License
+MIT © 2024 Afrin Jahan Era
 
-Distributed under the MIT License. See `LICENSE` for more information.
-
-## 📬 Contact
-
-**Afrin Jahan Era**  
-Email: your.email@example.com  
-Project Link: [https://github.com/yourusername/FlavourFit](https://github.com/yourusername/FlavourFit)
-
-
+```
 
