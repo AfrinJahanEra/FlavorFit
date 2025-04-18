@@ -1,6 +1,3 @@
-Here's a clean, elegant, and professional **GitHub README.md** for your FlavourFit project:
-
-```markdown
 # FlavourFit 🍏
 
 *A Java console application for personalized health and fitness recommendations*
@@ -17,14 +14,12 @@ Here's a clean, elegant, and professional **GitHub README.md** for your FlavourF
 
 ## 🏗 Architecture Highlights
 
-```mermaid
 graph TD
     A[MainDashboard] --> B[BaseFeature]
     B --> C[HealthFactor]
     B --> D[NutritionTracker]
     C --> E[BMICalculator]
     D --> F[FoodDatabase]
-```
 
 **Built With:**
 - **Java 17** - Core application logic
@@ -52,7 +47,6 @@ graph TD
 
 ## 📂 Project Structure
 
-```
 src/
 ├── main/
 │   ├── java/
@@ -63,7 +57,7 @@ src/
 │   └── resources/         # Data files
 docs/                      # Documentation
 pom.xml                    # Maven config
-```
+
 
 ## 🤝 How to Contribute
 
@@ -82,22 +76,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 **Afrin Jahan Era**  
 Email: your.email@example.com  
 Project Link: [https://github.com/yourusername/FlavourFit](https://github.com/yourusername/FlavourFit)
-```
 
-### Key Improvements:
-1. **Minimalist Design** - Clean spacing and section organization
-2. **Visual Hierarchy** - Clear headers with emoji accents
-3. **Essential Info Only** - No unnecessary technical overload
-4. **Ready-to-Use** - Just replace placeholders (links, emails, images)
-5. **Mobile-Friendly** - Proper Markdown formatting
 
-To customize:
-1. Add actual screenshots (replace placeholder banner)
-2. Update the Mermaid diagram to match your exact UML
-3. Include your real contact information
-4. Add any special installation notes if needed
 
-Would you like me to:
-- Add a demo GIF/video section?
-- Include specific code examples?
-- Expand the architecture explanation?
