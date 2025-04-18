@@ -29,6 +29,8 @@
 ### **5. Nutrition & Exercise Tracker**  
 📊 Log meals, workouts, and progress to **stay accountable and track goals**.  
 
+![FlavourFit Screenshot](Screenshot%202025-04-18%20232756.png)
+
 ---  
 
 # **🚀 Installation & Usage**  
