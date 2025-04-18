@@ -1,6 +1,7 @@
 # 🍏 FlavourFit 🌿 | Savor the Flavor of Health! 🏋️‍♀️🍽️  
 ### 💻 Fitness at Your Fingertips 
 
+
 **FlavourFit** is a **console application** designed to promote a healthier lifestyle through personalized recommendations. Built with **Java OOP principles**, it acts as a virtual health assistant, offering tailored guidance on nutrition, fitness, and overall well-being.  
 
 🔹 **No profiles needed** – Just input basic details (age, gender, weight) to get started!  
@@ -8,7 +9,8 @@
 
 ---
 
-## **✨ Features**  
+# **✨ Features**  
+
 
 ### **1. Health Factor Check**  
 📏 Calculate **BMI (Body Mass Index)** and **BMR (Basal Metabolic Rate)** for personalized health insights.  
@@ -27,7 +29,8 @@
 
 ---  
 
-## **🚀 Installation & Usage**  
+# **🚀 Installation & Usage**  
+
 
 ### **Prerequisites**  
 - Java JDK installed  
@@ -48,14 +51,14 @@
    java -cp bin Main  
    ```  
 
-### **How to Use**  
+## **How to Use**  
 - Follow the **console prompts** to input your details.  
 - Explore features via the **interactive menu**.  
 - Get instant **health & fitness recommendations**!  
 
 ---  
 
-## **🛠️ Technologies Used**  
+# **🛠️ Technologies Used**  
 - **Language:** Java (OOP)  
 - **Tools:** VS Code, IntelliJ IDEA  
 - **Security:** Input validation for reliable results  
@@ -63,7 +66,7 @@
 
 ---  
 
-## **🤝 Contribution**  
+# **🤝 Contribution**  
 Want to improve **FlavourFit**?  
 1. **Fork** the repo.  
 2. Create a **new branch** (`git checkout -b feature-name`).  
